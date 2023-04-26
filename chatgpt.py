@@ -6,7 +6,7 @@ Created on Mon Apr 10 19:21:39 2023
 """
 import openai
 
-openai.api_key ="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"
+openai.api_key ="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"
 
 
 def GetRispostaGpt(query):
