@@ -1,11 +1,13 @@
 import requests
 import time
+import meteo as meteo
 
 
 
-base_url = "https://api.telegram.org/bot5994787878:AAFWZpMQ4FkuPpBko0uwL9_6n1zWbID0hmM/sendAudio"
 
-def reply_audio(file,chatid,caption):
+
+def reply_audio(file,chatid,caption): 
+    base_url = "https://api.telegram.org/bot5994787878:AAFWZpMQ4FkuPpBko0uwL9_6n1zWbID0hmM/sendAudio"
     my_file = open(file, "rb")
     parameters = {
         "chat_id" : chatid,  #questo è il codice chat lo trovi con RAWDATABOT BOT DI TELEGRAM AGGIUNGENDO IN CHAT
@@ -29,4 +31,7 @@ def send_telegram_message(chat_id, text):
     }
     resp = requests.get(base_url, params=parameters)
     return resp.text
+
+
 #reply_audio("prova.mp3","-1001941753443" , "here is an audio file for you")
+#send_telegram_message("-1001941753443",meteo.get_meteo_info("scorzè") )

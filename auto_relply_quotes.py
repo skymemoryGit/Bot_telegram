@@ -6,6 +6,7 @@ Created on Tue Apr 25 18:10:10 2023
 """
 import requests
 import TelegramPushFunction as telegramPushfunction
+import meteo as meteo
 
 def get_Diz_quotes():
     import json
@@ -66,7 +67,9 @@ while True:
         now = datetime.datetime.now()
         print("Current date and time:", now)
         if(current_time=="8:00"):
-            telegramPushfunction.send_telegram_message("-1001941753443", "Buongiorno Pandames, ora è:\n"+str(now))
+            telegramPushfunction.send_telegram_message("-1001941753443", "Buongiorno Principesse, sono le 8:00 , ecco il meteo e quotes per la giornata")
+            telegramPushfunction.send_telegram_message("-1001941753443",meteo.get_meteo_info("verona") )
+            telegramPushfunction.send_telegram_message("-1001941753443",meteo.get_meteo_info("scorzè") )
             invioQuotes()
         if(current_time=="20:00"):
             telegramPushfunction.send_telegram_message("-1001941753443", "Buonasera Pandames, ora è:\n"+str(now))
