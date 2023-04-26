@@ -12,13 +12,14 @@ import Responses as r
 from telegram.ext import *
 import nest_asyncio
 from bing_image_downloader import downloader
-import  TelegramPushAudio as telegram_Push_Audio   #quest modulo alternativo send audio
+import  TelegramPushFunction as telegram_Push_Audio   #quest modulo alternativo send audio
 
 import img_down as bing_downloader
 nest_asyncio.apply()
 
 import text_on_img as toi
 import chatgpt as gpt
+#import auto_relply_quotes as autoreply  #quando parte server main, parte anche il servio auto reply QUOTES .)
 
 print("Bot start")
 
