@@ -11,8 +11,11 @@ import costant as key
 import Responses as r
 from telegram.ext import *
 import nest_asyncio
+import Openai_Dalle_E_img_model as openai_img
+
 from bing_image_downloader import downloader
 import  TelegramPushFunction as telegram_Push_Audio   #quest modulo alternativo send audio
+
 
 import img_down as bing_downloader
 nest_asyncio.apply()
@@ -55,6 +58,8 @@ async def help_command(update, context):
                                     "/GenPanda \n"
                                     "/gpt \n"
                                     "/jesolo \n"
+                                    "/aiimg \n"
+                                    
                                     
                                     
                                     
@@ -92,6 +97,24 @@ async def alcaldo_command(update, context):
 async def fantasia_command(update, context):
     img=choice(glob("img/fantasia/*.jpg"))
     await update.message.reply_photo(img)
+
+async def aiimg_command(update, context):
+    arg=context.args
+    
+    s=""
+    for i in arg:
+        s=s+" "+i
+    
+    if(s==""):
+        s="write something\nafter /aiImg"
+        await update.message.reply_text(s)
+    else:
+        
+        await update.message.reply_text("funzia e ora implementalo")
+    
+    
+
+
 
 async def jesolo_command(update, context):
     
@@ -196,7 +219,11 @@ async def triviale_command(update, context):
     #await update.message.reply_text("Quanto ""al caldo"" siete trivialmente oggi da 0-5?")
     img=choice(glob("img/triviale/*.PNG"))
     await update.message.reply_photo(img)
-    
+
+async def lina_command(update, context):
+    #await update.message.reply_text("Quanto ""al caldo"" siete trivialmente oggi da 0-5?")
+    img=choice(glob("img/lina/*.PNG"))
+    await update.message.reply_photo(img)
     
 async def gpt_command(update, context):
     arg=context.args
@@ -240,9 +267,11 @@ def main():
     application.add_handler(CommandHandler('alcaldo', alcaldo_command))
     application.add_handler(CommandHandler('triviale', triviale_command))
     application.add_handler(CommandHandler('fantasia', fantasia_command))
+    application.add_handler(CommandHandler('lina', lina_command))
     application.add_handler(CommandHandler('jesolo', jesolo_command))
     #application.add_handler(CommandHandler('find', find_command))
     application.add_handler(CommandHandler('gpt', gpt_command))
+    application.add_handler(CommandHandler('aiimg', aiimg_command))
     
     
     # create bot instance
