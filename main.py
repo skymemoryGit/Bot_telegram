@@ -5,6 +5,7 @@ Created on Thu Mar 30 15:13:17 2023
 @author: Ye Jian_cheng
 """
 import random
+import time
 from random import choice
 from glob import glob
 import costant as key
@@ -22,6 +23,7 @@ nest_asyncio.apply()
 
 import text_on_img as toi
 import chatgpt as gpt
+import Family_API
 #import auto_relply_quotes as autoreply  #quando parte server main, parte anche il servio auto reply QUOTES .)
 
 print("Bot start")
@@ -58,7 +60,7 @@ async def help_command(update, context):
                                     "/GenPanda \n"
                                     "/gpt \n"
                                     "/jesolo \n"
-                                    "/aiimg \n"
+                                    "/waifu \n"
                                     
                                     
                                     
@@ -192,6 +194,27 @@ async def GenPanda_command(update, context):
     
     
 
+async def waifu_command(update, context):
+    arg=context.args
+    
+    
+    s=""   # in sto caso s è il testo dato dall'utente
+    for i in arg:
+        s=s+" "+i
+    
+    
+    if(s==""):
+        Family_API.crea_immagine_waifu_Text("")
+       
+        await update.message.reply_photo("img/waifu/prova.png")  #mandi indietro result
+        
+    #print(s)
+    #await update.message.reply_text(s)
+    
+    
+    Family_API.crea_immagine_waifu_Text(s)
+    #time.sleep(10)
+    await update.message.reply_photo("img/waifu/prova_testo.png")  #mandi indietro result
     
     
     
@@ -271,7 +294,8 @@ def main():
     application.add_handler(CommandHandler('jesolo', jesolo_command))
     #application.add_handler(CommandHandler('find', find_command))
     application.add_handler(CommandHandler('gpt', gpt_command))
-    application.add_handler(CommandHandler('aiimg', aiimg_command))
+    #application.add_handler(CommandHandler('aiimg', aiimg_command))
+    application.add_handler(CommandHandler('waifu', waifu_command))
     
     
     # create bot instance
