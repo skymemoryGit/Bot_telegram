@@ -6,6 +6,9 @@ Created on Sat May 20 17:35:57 2023
 """
 import json
 import text_on_img 
+import random
+
+
 
 
 def get_waifu_url(): #METODO MAIN DA CHIAMARE
@@ -44,13 +47,15 @@ def get_waifu_image_and_download(nomefile):
     
     
 def crea_immagine_waifu_Text(text):
-    get_waifu_image_and_download("prova.png")
-    text_on_img.crea_Image_with_Text("img/waifu/prova_testo.png","img/waifu/prova.png", text)
+    index=random.randint(0, 48)
+    text_on_img.crea_Image_with_Text("img/waifu/prova_testo.png","img/waifu/"+"prova_"+str(index)+".png", text)
 
    
 
+#crea_immagine_waifu_Text("Sono le 10, basta lavorare, state al caldo \n-cit pandamem!")
+
+#for i in range(10,50):
+#    get_waifu_image_and_download("prova_"+str(i)+".png")
+#    text_on_img.crea_Image_with_Text("img/waifu/prova_testo.png","img/waifu/"+"prova_"+str(i)+".png", "")
     
-#get_waifu_image_and_download("prova.png")
-#text_on_img.crea_Image_with_Text("img/waifu/prova_testo.png","img/waifu/prova.png", "sono le 10, basta lavorare state al caldo \n-Pandamem")
-
-
+    

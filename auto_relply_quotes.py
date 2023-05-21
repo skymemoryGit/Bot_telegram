@@ -70,10 +70,11 @@ def start_work(idchat):
         
         if(current_time=="06:00"):
             print("entrato")
+            Family_API.crea_immagine_waifu_Text("Buongiorno Principesse Triviali, Ecco il meteo e quotes per la giornata \n-Pandamem")
+            telegramPushfunction.send_telegram_image("img/waifu/prova_testo.png", idchat)
+             
             telegramPushfunction.send_telegram_message(idchat, "Buongiorno Principesse Triviali, sono le 8:00 , Ecco il meteo e quotes per la giornata")
             telegramPushfunction.send_telegram_message(idchat,meteo.get_meteo_info("verona") )
-            
-            
             telegramPushfunction.send_telegram_message(idchat,meteo.get_meteo_info("scorzè") )
             telegramPushfunction.send_telegram_message(idchat,meteo.get_meteo_info("padova") )
                 
@@ -83,14 +84,13 @@ def start_work(idchat):
             invioQuotes(idchat)
             #creo img waifu
             Family_API.crea_immagine_waifu_Text("Andrà tutto bene e Triviale! \n-Pandamem")
-            time.sleep(15)
+            
             telegramPushfunction.send_telegram_image("img/waifu/prova_testo.png", idchat)
              
         if(current_time=="11:00"):
             for i in range(0,1):
                 #creo img waifu
                 Family_API.crea_immagine_waifu_Text("basta lavorare,pranzo time \n-Pandamem")
-                time.sleep(15)
                 telegramPushfunction.send_telegram_image("img/waifu/prova_testo.png", idchat)
                  
                 invioQuotes(idchat)
@@ -100,7 +100,6 @@ def start_work(idchat):
                 telegramPushfunction.send_telegram_message(idchat, "Sono le 10:30, BASTA LAVORARE, pausa time e state al caldo")
                 #creo img waifu
                 Family_API.crea_immagine_waifu_Text("Sono le 10, basta lavorare state al caldo \n-Pandamem")
-                #time.sleep(15)
                 telegramPushfunction.send_telegram_image("img/waifu/prova_testo.png", idchat)
                  
         if(current_time=="02:00"):
@@ -110,7 +109,7 @@ def start_work(idchat):
             telegramPushfunction.send_telegram_message(idchat, " Bene, sono le 0.00, vado a lavorare. Faccio un tiro fino le sei e poi treno")
             #creo img waifu
             Family_API.crea_immagine_waifu_Text("Buona notte Triviali! \n-Pandamem")
-            time.sleep(15)
+            #time.sleep(15)
             telegramPushfunction.send_telegram_image("img/waifu/prova_testo.png", idchat)
              
            
