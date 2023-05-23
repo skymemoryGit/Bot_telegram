@@ -204,9 +204,8 @@ async def waifu_command(update, context):
     
     
     if(s==""):
-        Family_API.crea_immagine_waifu_Text("")
-       
-        await update.message.reply_photo("img/waifu/prova.png")  #mandi indietro result
+        img=choice(glob("img/waifu/prova_*.png"))
+        await update.message.reply_photo(img)
         
     #print(s)
     #await update.message.reply_text(s)
