@@ -107,7 +107,7 @@ def start_work(idchat):
                 
             invioQuotes(idchat)
             telegramPushfunction.send_telegram_message(idchat, "Buon " + giorno+", Principesse Triviali, Ecco il meteo e quotes per la giornata \n-Pandamem")
-            if(day_of_week==6 and day_of_week==7):
+            if(day_of_week==6 or day_of_week==7):
                 telegramPushfunction.send_telegram_message(idchat, "E'WEEKEND, NON SI LAVORA, SI GODE! ")
     
         if(current_time=="18:00" and day_of_week!=6 and day_of_week!=7):
@@ -152,7 +152,7 @@ def start_work(idchat):
         #return s #!!!!non fai ritornare nulla cosi continua XD
       
             
-        time.sleep(10)  #fa uno sleep cosi almeno è sicuro che fa solo 1 volta il task se dovesse finire entro 1 min
+        time.sleep(60)  #fa uno sleep cosi almeno è sicuro che fa solo 1 volta il task se dovesse finire entro 1 min
         print("__________________________________")
 
 with concurrent.futures.ThreadPoolExecutor() as worker :

@@ -12,7 +12,7 @@ def remove_directory(path):
     
 
 #remove_directory("pythonDownload")
-Download_Image("bikini instagram girl", "pythonDownload", 50)
+#Download_Image("bikini instagram girl", "pythonDownload", 50)
     
     
 

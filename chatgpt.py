@@ -6,7 +6,7 @@ Created on Mon Apr 10 19:21:39 2023
 """
 import openai
 
-openai.api_key ="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" #"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"
+openai.api_key ="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" #"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"
 
 
 def GetRispostaGpt(query):
@@ -19,7 +19,13 @@ def GetRispostaGpt(query):
 
 
 
+def audio_to_text(path_fileaudio):
+    import openai
+    audio_file= open(path_fileaudio, "rb")
+    transcript = openai.Audio.transcribe("whisper-1", audio_file)
 
+    ris=transcript["text"]
+    return ris 
 #ris=GetRispostaGpt("mi riassumi la prima guerra mondiale in poche parole")
 #print(ris)
 

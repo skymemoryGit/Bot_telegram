@@ -13,9 +13,13 @@ import Responses as r
 from telegram.ext import *
 import nest_asyncio
 import Openai_Dalle_E_img_model as openai_img
-
+import requests
 from bing_image_downloader import downloader
 import  TelegramPushFunction as telegram_Push_Audio   #quest modulo alternativo send audio
+
+#from sent_by_user.audio import mp3_convert #file interno che non funziona :(
+import convert_mp3
+
 
 
 import img_down as bing_downloader
@@ -25,6 +29,8 @@ import text_on_img as toi
 import chatgpt as gpt
 import Family_API
 #import auto_relply_quotes as autoreply  #quando parte server main, parte anche il servio auto reply QUOTES .)
+import Controller_Config
+
 
 print("Bot start")
 
@@ -61,6 +67,7 @@ async def help_command(update, context):
                                     "/gpt \n"
                                     "/jesolo \n"
                                     "/waifu \n"
+                                    "/on_off_GptVocal \n"
                                     
                                     
                                     
@@ -268,15 +275,113 @@ async def gpt_command(update, context):
     #print(s)
     #await update.message.reply_text(s)
     
+async def set_on_off_gpt_vocal_command(update, context):
+   ris=Controller_Config.set_ON_OFF_state_gpt_vocal_function() #ad ogni click cambio stato on/off
+   
+   await update.message.reply_text(ris)
+    
+
+
+def download_audio(url, file_path):
+    response = requests.get(url)
+    with open(file_path, 'wb') as file:
+        file.write(response.content)
+    print(f"Audio downloaded successfully to '{file_path}'.")
+
+def elimina(file):
+    import os
+
+    file_path = file
+    
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print("Il file", file_path, "è stato eliminato.")
+    else:
+        print("Il file", file_path, "non esiste.")
+
+
+def read_state_file_conf(file):
+    filename = file
+    
+    # Legge il contenuto del file
+    with open(filename, 'r') as file:
+        content = file.read().strip()
+
+    # Restituisce lo stato letto dal file
+    return content
+
+
+async def get_voice(update, context: CallbackContext):
+    # get basic info about the voice note file and prepare it for downloading
+    new_file =await context.bot.get_file(update.message.voice.file_id)
+    print(new_file)
+    
+    print(new_file.file_path)
+    
+    url=new_file.file_path
+    
+    '''
+    #se vuoi salvare tutti 
+    import os
+    file_name = os.path.basename(url)
+    file_path = "audio_send_by_user/"+file_name
+    '''
+    
+    #file_path = "sent_by_user/audio/audio_file.oga"  #se si vuole salvare in modo organizzato , ma non funzionato... :()
+    file_path = "audio_file.oga"
+     
+    download_audio(url,file_path)
+    convert_mp3.convert()
     
     
     
+    text_from_audio= gpt.audio_to_text("audio_file.mp3")
+    
+    
+    
+    
+    
+    #gpt interaction! 
+    #se gpt vocal è attivo, allora chiedi a gpt usando vocal input
+    state=read_state_file_conf("configurazione/gpt_on_off.txt")
+    if(state=="on"):
+        #print("è on!!!!")
+        ris_gpt=gpt.GetRispostaGpt(text_from_audio)
+        await update.message.reply_text(ris_gpt)
+        
+        
+    else:#ritorna semplicemente testo convertito 
+        #print("è off!!! ")   
+        print(text_from_audio)
+        await update.message.reply_text(text_from_audio)
+    
+    
+    
+    
+    
+    
+    
+    elimina("audio_file.mp3")
+    elimina("audio_file.oga")
+    
+    
+
     
 
 
 def main():
+    
+    
+    
     application = Application.builder().token(key.API_KEY).build()
-
+    
+    #Lister
+    #ascoltatore di eventi: QUI PRATICAMENTE è un voice listener, praoticamente ogni volta che mando un vocal chiede al metodo get voice di gestire evento ! 
+    application.add_handler(MessageHandler(filters.VOICE, get_voice)) 
+    
+    
+    
+    
     # Commands
     application.add_handler(CommandHandler('start', start_commmand))
     application.add_handler(CommandHandler('help', help_command))
@@ -295,6 +400,7 @@ def main():
     application.add_handler(CommandHandler('gpt', gpt_command))
     #application.add_handler(CommandHandler('aiimg', aiimg_command))
     application.add_handler(CommandHandler('waifu', waifu_command))
+    application.add_handler(CommandHandler('on_off_GptVocal', set_on_off_gpt_vocal_command))
     
     
     # create bot instance
